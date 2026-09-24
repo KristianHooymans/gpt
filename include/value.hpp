@@ -20,3 +20,7 @@ struct Value {
   Value operator+(Value& other);
   Value operator*(Value& other);
 };
+
+void backward(Value& a);
+
+void backProp(Value& a);
