@@ -4,6 +4,7 @@
 
 #include <cstddef>
 #include <vector>
+#include <functional>
 
 
 struct Matrix {
@@ -25,3 +26,15 @@ Matrix transpose(const Matrix& a);
 Matrix matmul(const Matrix& a, const Matrix& b);
 
 Matrix scalarMult(double scalar, const Matrix& a);
+
+Matrix subtract(const Matrix& a, const Matrix& b);
+
+Matrix hadamard(const Matrix& a, const Matrix& b);
+
+double sum(const Matrix& a);
+
+Matrix apply(const Matrix& a, std::function<double(double)>);
+
+Matrix sumRows(const Matrix& a);
+
+Matrix softmaxRows(const Matrix& a);

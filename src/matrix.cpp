@@ -38,11 +38,6 @@ Matrix add (const Matrix& a, const Matrix& b) {
 
 
 Matrix transpose(const Matrix& a) {
-  //
-  //
-  //
-
-
 
   Matrix b(a.cols, a.rows);
 
@@ -86,3 +81,69 @@ Matrix scalarMult(double scal, const Matrix& a) {
   }
   return c;
 }
+
+Matrix subtract(const Matrix& a, const Matrix& b) {
+  if ((a.rows != b.rows) || (a.cols != b.cols)) {
+      throw std::runtime_error(std::format("Cannot subtract matrices with different dimensions: Matrix a has dimension: {}x{}, and Matrix b has dimension: {}x{}", a.rows, a.cols, b.rows, b.cols));
+  }
+  Matrix c (a.rows, a.cols);
+  for (size_t i = 0; i < a.rows; ++i) {
+    for (size_t j = 0; j < a.cols; ++j) {
+      c(i,j) = a(i,j) - b(i,j);
+    }
+  }
+  return c;
+}
+
+
+//element wise multiplication
+Matrix hadamard(const Matrix& a, const Matrix& b) {
+  if ((a.rows != b.rows) || (a.cols != b.cols)) {
+    throw std::runtime_error(std::format("Cannot complete hadamard with matrices of differing dimensions: Matrix a has dimension {}x{} and Matrix b has dimension {}x{}", a.rows, a.cols, b.rows, b.cols));
+  }
+  Matrix c(a.rows, a.cols);
+
+  for (size_t i = 0; i < a.rows; ++i) {
+    for (size_t j = 0; j < a.cols; ++j) {
+      c(i,j) = a(i,j) * b(i,j);
+    }
+  }
+  return c;
+}
+
+//applies a function to each element in the matrix
+Matrix apply(const Matrix& a, std::function<double(double)> f) {
+  Matrix c(a.rows, a.cols);
+  for (size_t i = 0; i < a.rows; ++i) {
+    for(size_t j = 0; j < a.cols; ++j) {
+      c(i,j) = f(a(i,j));
+    }
+  }
+  return c;
+}
+
+
+double sum(const Matrix& a) {
+  double sum = 0;
+  for (size_t i = 0; i < a.rows; ++i) {
+    for(size_t j = 0; j < a.cols; ++j) {
+      sum += a(i,j);
+    }
+  }
+  return sum;
+}
+
+Matrix sumRows(const Matrix& a){
+  Matrix c(a.rows, 1);
+  for (size_t i = 0; i < a.rows; ++i) {
+    double rowSum = 0;
+    for (size_t j = 0; j < a.cols; ++j) {
+      rowSum += a(i,j);
+    }
+    c(i,0) = rowSum;
+  }
+  return c;
+}
+
+
+
